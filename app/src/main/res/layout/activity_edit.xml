@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="133dp"
+        android:layout_marginBottom="57dp"
+        android:text="@string/editR"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/player1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/player1"
+        android:layout_width="161dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="24dp"
+        android:ems="10"
+        android:hint="@string/player1"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/winnerGroup"
+        app:layout_constraintEnd_toStartOf="@+id/player2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <EditText
+        android:id="@+id/player2"
+        android:layout_width="161dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="57dp"
+        android:ems="10"
+        android:hint="@string/player2"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/player1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/player1"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RadioGroup
+        android:id="@+id/winnerGroup"
+        android:layout_width="309dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player1">
+
+        <RadioButton
+            android:id="@+id/winner1"
+            android:layout_width="111dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/winnerText"
+            android:layout_width="125dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:text="@string/winner"
+            android:textSize="24sp" />
+
+        <RadioButton
+            android:id="@+id/winner2"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/score1"
+        android:layout_width="90dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="93dp"
+        android:layout_marginBottom="13dp"
+        android:ems="10"
+        android:hint="@string/p1"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
+        app:layout_constraintEnd_toStartOf="@+id/middleScore"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameScore"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/score2"
+        android:layout_width="90dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginBottom="51dp"
+        android:ems="10"
+        android:hint="@string/p2"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/middleScore"
+        app:layout_constraintTop_toBottomOf="@+id/gameScore" />
+
+    <TextView
+        android:id="@+id/middleScore"
+        android:layout_width="53dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/middle"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
+        app:layout_constraintEnd_toStartOf="@+id/score2"
+        app:layout_constraintStart_toEndOf="@id/score1"
+        app:layout_constraintTop_toBottomOf="@+id/gameScore"
+        app:layout_constraintVertical_bias="0.12" />
+
+    <TextView
+        android:id="@+id/gameScore"
+        android:layout_width="286dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="63dp"
+        android:text="@string/score"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/score1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/winnerGroup" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="165dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="158dp"
+        android:layout_marginBottom="128dp"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

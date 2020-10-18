@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TournamentHistory</string>
+    <string name="results">Tournament Results</string>
+    <string name="allResults">All Results</string>
+    <string name="all">View All</string>
+    <string name="search">Search for Player</string>
+    <string name="addR">Add Result</string>
+    <string name="editR">Edit Result</string>
+    <string name="add">Add</string>
+    <string name="winner">Winner</string>
+    <string name="player1">Player 1</string>
+    <string name="player2">Player 2</string>
+    <string name="p1">P1</string>
+    <string name="p2">P2</string>
+    <string name="score">Game Score</string>
+    <string name="middle">-</string>
+</resources>
