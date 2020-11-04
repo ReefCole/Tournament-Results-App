@@ -22,12 +22,14 @@ class SearchAdapter(private val data: List<Result>, private val name: String, pr
 
     override fun getItemCount() = data.size
 
+    // tracker handler for multi select
     override fun onBindViewHolder(holder: SearchAdapter.ViewHolder, position: Int) {
             tracker?.let {
                 holder.bind(data[position], it.isSelected(data[position]))
             }
     }
 
+    // functions for ItemKeyProvider
     fun getItem(position: Int) = data[position]
 
     fun getPosition(id: Int) = data.indexOfFirst { it.id == id }
@@ -44,6 +46,7 @@ class SearchAdapter(private val data: List<Result>, private val name: String, pr
         fun bind(item: Result, isActivated: Boolean = false) {
             itemView.isActivated = isActivated
 
+            // checks winner, adjusts display to match the key name (icon, opponent)
             (item.p1Score > item.p2Score).let {
                 if (name == item.p1) {
                     opponent.text = item.p2
@@ -57,11 +60,14 @@ class SearchAdapter(private val data: List<Result>, private val name: String, pr
                     else icon.setImageResource(R.drawable.w)
                 }
             }
+            // Replaces icon when activated by tracker
             if (isActivated) icon.setImageResource(R.drawable.tick)
+
             score.text = tempScore
             edit.setOnClickListener { listener(item) }
         }
 
+        // functions to use ItemDetailsLookup
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Result> =
             object : ItemDetailsLookup.ItemDetails<Result>() {
                 override fun getPosition(): Int = adapterPosition

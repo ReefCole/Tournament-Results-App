@@ -17,6 +17,7 @@ class EditActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.title).text = "Edit Result"
 
+        // presets data to be edited
         val player1 = findViewById<EditText>(R.id.player1)
         player1.setText(resultData.p1)
         val player2 = findViewById<EditText>(R.id.player2)
@@ -34,8 +35,9 @@ class EditActivity : AppCompatActivity() {
         }
 
         val editButton = findViewById<Button>(R.id.addButton)
-        editButton.text = "Edit"
+        editButton.text = "Submit"
 
+        //validates input, updates based ID
         editButton.setOnClickListener(){
             if (validate(player1.text.toString(), player2.text.toString(), score1.text.toString().toInt(), score2.text.toString().toInt(), winner.isChecked)) {
                 val db = DataBaseHandler(this)
@@ -49,10 +51,12 @@ class EditActivity : AppCompatActivity() {
                         winner.isChecked
                     )
                 )
+                finish()
             }
         }
     }
 
+    //validation check, ensures correct character use, players are different and not a draw
     fun validate(p1: String, p2: String, s1: Int, s2: Int, win: Boolean): Boolean {
         var check = true
 

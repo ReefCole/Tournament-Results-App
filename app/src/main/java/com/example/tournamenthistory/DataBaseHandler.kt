@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 
+//table column names
 val DATABASE_NAME = "TourneyDB"
 val TABLE_NAME =  "Results"
 val COL_ID = "id"
@@ -16,7 +17,6 @@ val COL_S2 = "Score2"
 
 class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
     override fun onCreate(db: SQLiteDatabase?) {
-       // if (db?.rawQuery("SELECT name FROM $DATABASE_NAME WHERE type='table' AND name=$TABLE_NAME", null) == null) {
             val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
                     COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COL_P1 + " VARCHAR(256), " +
@@ -24,13 +24,13 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                     COL_S1 + " INTEGER, " +
                     COL_S2 + " INTEGER)"
             db?.execSQL(createTable)
-       // }
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         TODO("Not yet implemented")
     }
 
+    //creates new item with unique int ID
     fun insertData(result: Result) {
         val db = this.writableDatabase
         var cv = ContentValues()
@@ -43,18 +43,21 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
         }
         else {
-            //Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
         }
     }
 
+    //creates query for readData fetch (gets all items)
     fun retrieveAll(): MutableList<Result>{
         return readData("Select * from $TABLE_NAME")
     }
 
+    // creates query for readData fetch (gets all items containing key in player1 or player 2 columns)
     fun retrieveSearch(search: String): MutableList<Result>{
         return readData("Select * from $TABLE_NAME Where $COL_P1='$search' OR $COL_P2='$search'")
     }
 
+    // fetches data from db using given query and converts it to list of results
     private fun readData(query: String): MutableList<Result> {
         val list: MutableList<Result> = ArrayList()
         val db = this.readableDatabase
@@ -76,15 +79,15 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         return list
     }
 
+    // deletes item from database
     fun deleteData(res: String) {
         val db = this.readableDatabase
         db.delete(TABLE_NAME, "$COL_ID=?", arrayOf(res))
-       // db.close()
     }
 
+    //resets database to default state with sample data
     fun refreshDB() {
         val db = this.readableDatabase
-        //db.rawQuery("Delete from $TABLE_NAME", null)
         db.execSQL("Delete from '$TABLE_NAME'")
         db.close()
         insertData(Result(0,"jake", "sunny", 1, 2, false))
@@ -106,6 +109,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         insertData(Result(0,"will", "kaiza", 1, 2, false))
     }
 
+    // changes an item in the table based off the provided unique ID
     fun updateResult(result: Result) {
         val db = this.readableDatabase
         var cv = ContentValues()
@@ -123,6 +127,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         }
     }
 
+    // checks whether a player exists in the database (for search function in main)
     fun checkName(search: String): Boolean{
         return retrieveSearch(search).size != 0
     }

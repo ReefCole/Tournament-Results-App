@@ -23,12 +23,14 @@ class AllAdapter(private val data: List<Result>, private val listener: (Result) 
 
     override fun getItemCount() = data.size
 
+    // tracker handler for multi select
     override fun onBindViewHolder(holder: AllAdapter.ViewHolder, position: Int) {
         tracker?.let {
             holder.bind(data[position], it.isSelected(data[position]))
         }
     }
 
+    //functions to serve the ItemKeyProvider for multi select
     fun getItem(position: Int) = data[position]
 
     fun getPosition(id: Int) = data.indexOfFirst { it.id == id }
@@ -40,6 +42,7 @@ class AllAdapter(private val data: List<Result>, private val listener: (Result) 
         private val score: TextView = v.findViewById(R.id.score)
         private val edit: ImageView = v.findViewById(R.id.edit)
 
+        // sets data from db, winner is displayed in bold
         fun bind(item: Result, isActivated: Boolean = false) {
             itemView.isActivated = isActivated
             player1.text = item.p1
@@ -53,6 +56,7 @@ class AllAdapter(private val data: List<Result>, private val listener: (Result) 
             edit.setOnClickListener {listener(item) }
         }
 
+        // function for using ItemDetailsLookup
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Result> =
             object : ItemDetailsLookup.ItemDetails<Result>() {
                 override fun getPosition(): Int = adapterPosition

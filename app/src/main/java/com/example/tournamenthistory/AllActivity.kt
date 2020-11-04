@@ -32,13 +32,15 @@ class AllActivity : AppCompatActivity(), ActionMode.Callback {
         linearLayoutManager = LinearLayoutManager(this)
         resultList.layoutManager = linearLayoutManager
 
-        //val numData = initData()
+        // set up database, retrieve full table as a list
         val db = DataBaseHandler(this)
         val numData = db.retrieveAll()
 
+        //sets up All adapter
         adapter = AllAdapter(numData) {showEdit(it)}
         resultList.adapter = adapter
 
+        // selection tracker is built and attached to adapter
         tracker = SelectionTracker.Builder<Result>(
             "mySelection",
             resultList,
@@ -51,6 +53,7 @@ class AllActivity : AppCompatActivity(), ActionMode.Callback {
 
         adapter.tracker = tracker
 
+        //observer set up, creates action mode long click, remains until selected list is empty
         tracker?.addObserver(
             object : SelectionTracker.SelectionObserver<Long>() {
                 override fun onSelectionChanged() {
@@ -81,6 +84,7 @@ class AllActivity : AppCompatActivity(), ActionMode.Callback {
         return listOf(res1, res2)
     }
 
+    // used to refresh the recycler view after items are deleted or activity is returned to after edit
     fun refresh() {
         finish()
         startActivity(Intent(this, AllActivity::class.java))
@@ -92,6 +96,7 @@ class AllActivity : AppCompatActivity(), ActionMode.Callback {
         refresh()
     }
 
+    // sets up delete button in action bar, deletes every selected item
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_view_delete -> {
@@ -103,6 +108,7 @@ class AllActivity : AppCompatActivity(), ActionMode.Callback {
         return true
     }
 
+    // inflates menu bar when action is created
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mode?.let {
             val inflater: MenuInflater = it.menuInflater
@@ -119,7 +125,6 @@ class AllActivity : AppCompatActivity(), ActionMode.Callback {
     override fun onDestroyActionMode(mode: ActionMode?) {
         Log.i("post", "closing")
         adapter.tracker?.clearSelection()
-        //adapter.notifyDataSetChanged()
         actionMode = null
     }
 }

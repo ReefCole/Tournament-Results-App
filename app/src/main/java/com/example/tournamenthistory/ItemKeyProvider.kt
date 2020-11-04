@@ -1,8 +1,8 @@
 package com.example.tournamenthistory
 
-import android.widget.Adapter
 import androidx.recyclerview.selection.ItemKeyProvider
 
+// key provider for each adapter
 class MyItemKeyProvider(private val adapter: SearchAdapter) :
     ItemKeyProvider<Result>(SCOPE_CACHED) {
 

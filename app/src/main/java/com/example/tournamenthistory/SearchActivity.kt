@@ -35,17 +35,20 @@ class SearchActivity : AppCompatActivity(), ActionMode.Callback {
         linearLayoutManager = LinearLayoutManager(this)
         numberList.layoutManager = linearLayoutManager
 
+        // key to retrieve data from db
         key = intent.getStringExtra("search")
 
         findViewById<TextView>(R.id.resultsText).text = key
 
-        //val numData = initData()
+        // set up database, retrieve items using key
         val db = DataBaseHandler(this)
         val numData = db.retrieveSearch(key)
 
+        //sets up search adapter using key
         adapter = SearchAdapter(numData, key) {showEdit(it)}
         numberList.adapter = adapter
 
+        // selection tracker is built and attached to adapter
         tracker = SelectionTracker.Builder<Result>(
             "mySelection",
             numberList,
@@ -58,6 +61,7 @@ class SearchActivity : AppCompatActivity(), ActionMode.Callback {
 
         adapter.tracker = tracker
 
+        //observer set up, creates action mode long click, remains until selected list is empty
         tracker?.addObserver(
             object : SelectionTracker.SelectionObserver<Long>() {
                 override fun onSelectionChanged() {
@@ -82,15 +86,8 @@ class SearchActivity : AppCompatActivity(), ActionMode.Callback {
         startActivity(intent)
     }
 
-    private fun initData() : List<Result>{
-        val res1 = Result(0,"one", "two", 1, 2, false)
-        val res2 = Result(1,"three", "four", 3, 2, true)
-        val res3 = Result(2,"four", "three", 1, 3, false)
-        val res4 = Result(3,"three", "one", 0, 3, true)
-        return listOf(res1, res2, res3, res4)
-    }
-
-    fun refresh() {
+    // used to refresh the recycler view after items are deleted or activity is returned to after edit
+    private fun refresh() {
         val intent = Intent(this, SearchActivity::class.java)
         intent.putExtra("search", key)
         finish()
@@ -103,6 +100,7 @@ class SearchActivity : AppCompatActivity(), ActionMode.Callback {
         refresh()
     }
 
+    // sets up delete button in action bar, deletes every selected item
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_view_delete -> {
@@ -113,7 +111,7 @@ class SearchActivity : AppCompatActivity(), ActionMode.Callback {
         }
         return true
     }
-
+    // inflates menu bar when action is created
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mode?.let {
             val inflater: MenuInflater = it.menuInflater
@@ -130,7 +128,6 @@ class SearchActivity : AppCompatActivity(), ActionMode.Callback {
     override fun onDestroyActionMode(mode: ActionMode?) {
         Log.i("post", "closing")
         adapter.tracker?.clearSelection()
-        //adapter.notifyDataSetChanged()
         actionMode = null
     }
 

@@ -4,6 +4,8 @@ import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 
+// lookup class for each adapter
+//collects data from selected recycler item
 class MyItemDetailsLookup(private val recyclerView: RecyclerView) :
     ItemDetailsLookup<Result>() {
     override fun getItemDetails(event: MotionEvent): ItemDetails<Result>? {

@@ -17,12 +17,15 @@ class MainActivity : AppCompatActivity() {
 
         val searchBar = findViewById<SearchView>(R.id.search)
         val textBar = findViewById<TextView>(R.id.title)
+
+        // title used to refresh database, mostly for testing purposes.
         textBar.setOnClickListener {
             db.refreshDB()
             Toast.makeText(this, "DB refreshed", Toast.LENGTH_LONG).show()
 
         }
 
+        // Set up player search bar
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.let { db.checkName(it.toLowerCase()) }!!) {
@@ -49,15 +52,8 @@ class MainActivity : AppCompatActivity() {
         }
         val addButton = findViewById<Button>(R.id.addButton)
         addButton.setOnClickListener{
-            //val intent = Intent(this, SearchActivity::class.java)
             val intent = Intent(this, AddActivity::class.java)
             startActivity(intent)
         }
-
-        val res1 = Result(0,"one", "three", 1, 2, false)
-        val res2 = Result(1,"one", "four", 3, 2, true)
-     //   db.insertData(res1)
-       // db.insertData(res2)
-        Toast.makeText(this, db.retrieveAll().size.toString(), Toast.LENGTH_SHORT).show()
     }
 }
